@@ -34,6 +34,13 @@ contract VendingMachineTest is Test {
         assertEq(initBalance, INITIAL_BALANCE_DONUT);
     }
 
+    function test_7_revertIfBalanceWouldBeMoreThenInitialBalance() public {
+        uint256 initBalance = vendingMachine.initialBalance();
+        console.log("initial balance: ", initBalance);
+        vm.expectRevert();
+        vendingMachine.restock(30);
+    }
+
     function test_8_getTheBuyerBalanceAfterPurchase() public {
         uint PURCHASED_DONUTS = 10;
 
@@ -44,7 +51,7 @@ contract VendingMachineTest is Test {
             balanceBeforePurchase
         );
 
-        vendingMachine.purchase{value: value};
+        vendingMachine.purchase{value: value}(PURCHASED_DONUTS);
 
         uint balanceAfterPurchase = vendingMachine.getBuyerBalancer();
         console.log(
