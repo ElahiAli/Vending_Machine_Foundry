@@ -8,6 +8,9 @@ import {DeployVendingMachine} from "../../script/DeployVendingMachine.sol";
 contract VendingMachineTest is Test {
     VendingMachine vendingMachine;
 
+    // define external user
+    address USER = makeAddr("user");
+
     function setUp() external {
         DeployVendingMachine deployVendingMachine = new DeployVendingMachine();
         vendingMachine = deployVendingMachine.run();
