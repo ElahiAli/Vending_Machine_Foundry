@@ -31,7 +31,7 @@ contract VendingMachineTest is Test {
 
     function test_1_IntialBalanceWith100Ether() public {
         uint256 initBalance = vendingMachine.initialBalance();
-        assertEq(initBalance, INITIAL_BALANCE);
+        assertEq(initBalance, INITIAL_BALANCE_DONUT);
     }
 
     function test_8_getTheBuyerBalanceAfterPurchase() public {
@@ -44,7 +44,7 @@ contract VendingMachineTest is Test {
             balanceBeforePurchase
         );
 
-        vendingMachine.purchase(value);
+        vendingMachine.purchase{value: value};
 
         uint balanceAfterPurchase = vendingMachine.getBuyerBalancer();
         console.log(
