@@ -60,6 +60,15 @@ contract VendingMachineTest is Test {
         assertEq(userBalanceAfter, PURCHASEAMOUNT);
     }
 
+    function test_4_UserCantBuyWithInsufficientFunds() public {
+        uint256 PURCHASEAMOUNT = 10;
+        uint256 value = (PURCHASEAMOUNT * DONUT_PRICE - 1);
+
+        vm.prank(USER);
+        vm.expectRevert();
+        vendingMachine.purchase{value: value}(PURCHASEAMOUNT);
+    }
+
     function test_5_shouldNotAllowAPurchaseIfThereAreNotEnoughDonutsInStock()
         public
     {
