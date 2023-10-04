@@ -34,6 +34,15 @@ contract VendingMachineTest is Test {
         assertEq(initBalance, INITIAL_BALANCE_DONUT);
     }
 
+    function test_5_shouldNotAllowAPurchaseIfThereAreNotEnoughDonutsInStock()
+        public
+    {
+        uint PURCHASED_DONUTS = 200;
+        uint value = (PURCHASED_DONUTS * DONUT_PRICE);
+        vm.expectRevert();
+        vendingMachine.purchase{value: value}(PURCHASED_DONUTS);
+    }
+
     function test_6_shouldNotAllowedAUserInsteadOwnerToRestockTheBalance()
         public
     {
