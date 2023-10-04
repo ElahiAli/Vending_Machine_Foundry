@@ -10,6 +10,8 @@ contract VendingMachineTest is Test {
 
     // define external user
     address USER = makeAddr("user");
+    uint INITIAL_BALANCE;
+    uint DONUT_PRICE;
 
     function setUp() external {
         DeployVendingMachine deployVendingMachine = new DeployVendingMachine();
