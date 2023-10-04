@@ -34,4 +34,15 @@ contract VendingMachineTest is Test {
         vm.expectRevert();
         vendingMachine.restock(RESTOCKAMOUNT);
     }
+
+    function test_3_UserCanPurchaseDonut() public {
+        uint256 PURCHASEAMOUNT = 10;
+        uint256 value = PURCHASEAMOUNT * DONUT_PRICE;
+        uint256 userBalanceBefore = vendingMachine.getBuyerBalancer();
+        vendingMachine.purchase{value: value}(PURCHASEAMOUNT);
+        uint256 userBalanceAfter = vendingMachine.getBuyerBalancer();
+
+        assertEq(userBalanceBefore, 0);
+        assertEq(userBalanceAfter, PURCHASEAMOUNT);
+    }
 }
