@@ -34,6 +34,15 @@ contract VendingMachineTest is Test {
         assertEq(initBalance, INITIAL_BALANCE_DONUT);
     }
 
+    function test_6_shouldNotAllowedAUserInsteadOwnerToRestockTheBalance()
+        public
+    {
+        console.log(" owner:  ", msg.sender);
+        vm.prank(USER);
+        vm.expectRevert();
+        vendingMachine.restock(30);
+    }
+
     function test_7_revertIfBalanceWouldBeMoreThenInitialBalance() public {
         uint256 initBalance = vendingMachine.initialBalance();
         console.log("initial balance: ", initBalance);
