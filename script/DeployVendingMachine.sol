@@ -6,10 +6,16 @@ import {VendingMachine} from "../src/VendingMachine.sol";
 
 // import {HelperConfig} from "./HelperConfig.sol";
 
-contract CounterScript is Script {
-    function setUp() public {}
+contract DeployVendingMachine is Script {
+    // function setUp() public {
 
-    function run() public {
-        vm.broadcast();
+    // }
+
+    // Deploying Vending Machine
+    function run() external returns (VendingMachine) {
+        vm.startBroadcast();
+        VendingMachine vendingMachine = new VendingMachine();
+        vm.stopBroadcast();
+        return (vendingMachine);
     }
 }
