@@ -29,6 +29,11 @@ contract VendingMachineTest is Test {
         assertEq(vendingMachine.owner(), msg.sender);
     }
 
+    function test_1_IntialBalanceWith100Ether() public {
+        uint256 initBalance = vendingMachine.initialBalance();
+        assertEq(initBalance, INITIAL_BALANCE);
+    }
+
     function test_8_getTheBuyerBalanceAfterPurchase() public {
         uint PURCHASED_DONUTS = 10;
 
