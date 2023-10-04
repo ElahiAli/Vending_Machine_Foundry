@@ -10,12 +10,14 @@ contract VendingMachineTest is Test {
 
     // define external user
     address USER = makeAddr("user");
-    uint INITIAL_BALANCE = 100;
+    uint INITIAL_BALANCE_DONUT = 100;
     uint DONUT_PRICE = 0.00001 ether;
+    uint STARTING_BALANCE = 100 ether;
 
     function setUp() external {
         DeployVendingMachine deployVendingMachine = new DeployVendingMachine();
         vendingMachine = deployVendingMachine.run();
+        vm.deal(USER, STARTING_BALANCE);
     }
 
     // checking the deploy contract address is equal with msg.sender
@@ -25,5 +27,33 @@ contract VendingMachineTest is Test {
         console.log(vendingMachine.owner());
 
         assertEq(vendingMachine.owner(), msg.sender);
+    }
+
+    function test_8_getTheBuyerBalanceAfterPurchase() public {
+        uint PURCHASED_DONUTS = 10;
+
+        uint value = (PURCHASED_DONUTS * DONUT_PRICE);
+        uint balanceBeforePurchase = vendingMachine.getBuyerBalancer();
+        console.log(
+            "the owner balance before purchase is: ",
+            balanceBeforePurchase
+        );
+
+        vendingMachine.purchase(value);
+
+        uint balanceAfterPurchase = vendingMachine.getBuyerBalancer();
+        console.log(
+            "the owner balance after purchase is :",
+            balanceAfterPurchase
+        );
+
+        assertEq(
+            balanceBeforePurchase,
+            (balanceAfterPurchase - PURCHASED_DONUTS)
+        );
+        assertEq(
+            balanceAfterPurchase,
+            (balanceBeforePurchase + PURCHASED_DONUTS)
+        );
     }
 }
