@@ -34,6 +34,21 @@ contract VendingMachineTest is Test {
         assertEq(initBalance, INITIAL_BALANCE_DONUT);
     }
 
+    function test_2_OnlyOwnerCanRestock() public {
+        uint256 RESTOCKAMOUNT = 5;
+        uint256 PURCHASEAMOUNT = 10;
+        uint256 value = PURCHASEAMOUNT * DONUT_PRICE;
+
+        vendingMachine.purchase{value: value}(PURCHASEAMOUNT);
+
+        vendingMachine.getVendingMachineBalance();
+        // console.log(vendingBalanceAfterPurchace);
+
+        vm.prank(USER);
+        vm.expectRevert();
+        vendingMachine.restock(RESTOCKAMOUNT);
+    }
+
     function test_5_shouldNotAllowAPurchaseIfThereAreNotEnoughDonutsInStock()
         public
     {
